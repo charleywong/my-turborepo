@@ -1,0 +1,65 @@
+name: CI
+ 
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  actions: write
+  attestations: read
+  checks: write
+  contents: read
+  deployments: read
+  id-token: write
+  issues: read
+  discussions: read
+  packages: write
+  pages: read
+  pull-requests: read
+  repository-projects: write
+  security-events: read
+  statuses: read
+
+
+jobs:
+  build:
+    name: Build and Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    # To use Remote Caching, uncomment the next lines and follow the steps below.
+    # env:
+    #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    #  TURBO_REMOTE_ONLY: true
+ 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+ 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+ 
+      - name: Install dependencies
+        run: npm install
+ 
+      - name: Build
+        run: npm run build
+ 
+      - name: Test
+        run: npm run test
+      
+      - name: Generate test report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: 'Test report'
+          path: ./apps/*/results/test-results.xml
+          reporter: jest-junit
+          use-actions-summary: 'true'
