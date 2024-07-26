@@ -41,5 +41,5 @@ jobs:
         if: success() || failure()
         with:
           name: test-results
-          path: ./apps/docs/results/*.xml
+          path: ./*/results/*.xml
           if-no-files-found: error
