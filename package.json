@@ -6,10 +6,11 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "vitest",
-    "test:watch": "vitest --watch"
+    "test": "turbo test"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "jsdom": "^24.1.1",
     "prettier": "^3.2.5",
     "turbo": "^2.0.9",
     "typescript": "^5.4.5"
