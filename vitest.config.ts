@@ -1,7 +1,6 @@
 import path from 'path';
-import { defineProject, defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-
 
 export default defineConfig({
     plugins: [react()],
@@ -15,15 +14,9 @@ export default defineConfig({
         coverage: {
             reporter: [
                 ['json', { 'file': `coverage-final.json` }], 
-                ['json-summary', { 'file': `coverage-summary.json` }],
-                'text'
+                ['json-summary', { 'file': `coverage-summary.json` }]
             ],
             reportOnFailure: true
-        }
-    },
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, '.')
         }
     }
 })
