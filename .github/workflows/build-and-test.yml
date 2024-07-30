@@ -40,7 +40,14 @@ jobs:
 
       - name: Vitest-report
         uses: dorny/test-reporter@v1
+        if: success() || failure()
         with:
           name: Vitest-results # Name of the check run which will be created
           path: "apps/**/*.xml" # Path to test results (inside artifact .zip)
           reporter: java-junit # Format of test results
+
+      - name: Vitest-coverage-report
+        if: success() || failure()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: ./apps

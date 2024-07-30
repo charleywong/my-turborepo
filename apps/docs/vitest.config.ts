@@ -7,6 +7,13 @@ export default defineConfig({
     test: { 
         globals: true,
         environment: 'jsdom',
+        coverage: {
+            reporter: [
+                ['json', { 'file': `${process.env.npm_package_name}-coverage-final.json` }], 
+                ['json-summary', { 'file': `${process.env.npm_package_name}-coverage-summary.json` }]
+            ],
+            reportOnFailure: true
+        },
         reporters: ['junit'],
         outputFile: {
             junit: `./results/${process.env.npm_package_name}-test-results.xml`
