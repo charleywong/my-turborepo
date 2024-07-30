@@ -6,6 +6,9 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+permissions:
+  checks: write
+
 jobs:
   build:
     name: Build and Test
@@ -37,9 +40,12 @@ jobs:
 
       - name: Test
         run: npm run test
-      - uses: actions/upload-artifact@v4
+
+      - name: Vitest-report
+        uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
           name: test-results
-          path: apps/*/results/*.json
+          path: apps/*/results/*.xml
+          reporter: java-junit
           if-no-files-found: error
