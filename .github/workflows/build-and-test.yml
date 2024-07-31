@@ -36,16 +36,28 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: npm run test-coverage
+        run: npm run test
 
       - name: Vitest-report
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
           name: Vitest-results # Name of the check run which will be created
-          path: "results/*.xml" # Path to test results (inside artifact .zip)
+          path: "./**/results/*.xml" # Path to test results (inside artifact .zip)
           reporter: java-junit # Format of test results
 
-      - name: Vitest-coverage-report
+      - name: Docs-coverage-report
         if: success() || failure()
         uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          name: Docs coverage report
+          json-summary-path: "./apps/docs/coverage/docs-coverage-summary.json"
+          json-final-path: "./apps/docs/coverage/docs-coverage-final.json"
+
+      - name: web-coverage-report
+        if: success() || failure()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          name: web coverage report
+          json-summary-path: "./apps/web/coverage/web-coverage-summary.json"
+          json-final-path: "./apps/web/coverage/web-coverage-final.json"

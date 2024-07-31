@@ -14,8 +14,8 @@ export default defineConfig({
         },
         coverage: {
             reporter: [
-                ['json', { 'file': `coverage-final.json` }], 
-                ['json-summary', { 'file': `coverage-summary.json` }],
+                ['json', { 'file': `${process.env.npm_package_name}-coverage-final.json` }], 
+                ['json-summary', { 'file': `${process.env.npm_package_name}-coverage-summary.json` }],
                 'text'
             ],
             reportOnFailure: true
