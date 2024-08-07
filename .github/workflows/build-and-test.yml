@@ -38,6 +38,9 @@ jobs:
       - name: Test
         run: npm run test
 
+      - name: Generate vitest report summary
+        run: echo "Vitest Report" >> $GITHUB_STEP_SUMMARY
+
       - name: Vitest-report
         uses: dorny/test-reporter@main
         if: success() || failure()
