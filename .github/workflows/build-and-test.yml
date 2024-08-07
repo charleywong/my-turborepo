@@ -36,15 +36,21 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: npm run test-coverage
+        run: npm run test
+
+      - name: Generate vitest report summary
+        run: echo "Vitest Report" >> $GITHUB_STEP_SUMMARY
 
       - name: Vitest-report
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@main
         if: success() || failure()
         with:
           name: Vitest-results # Name of the check run which will be created
-          path: "results/*.xml" # Path to test results (inside artifact .zip)
+          path: "apps/**/results/*.xml, packages/**/results/*.xml" # Path to test results (inside artifact .zip)
           reporter: java-junit # Format of test results
+
+      - name: Aggregate coverage reports
+        run: npm run test-coverage
 
       - name: Vitest-coverage-report
         if: success() || failure()

@@ -8,7 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "test-coverage": "vitest --coverage"
+    "test-coverage": "npx tsx ./scripts/aggregateCoverageReports"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
